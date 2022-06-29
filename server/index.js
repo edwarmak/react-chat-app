@@ -1,15 +1,18 @@
 const express = require('express')
-const socketio = require('socket.io')
 const http = require('http')
 const cors = require('cors')
 // which port we are running on
 const PORT = process.env.PORT || 5001
-
 const router = require('./router')
-
 const app = express()
 const server = http.createServer(app)
-const io = socketio(server)
+const { Server } = require("socket.io")
+const io = new Server(server,
+    {
+        cors:{
+            origin:"*"
+        }
+    })
 
 // listen for incoming sockets and log to the console
 io.on('connection', (socket) => {
